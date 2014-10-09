@@ -1,4 +1,6 @@
 - hosts: all
+  roles:
+  - Stouts.nginx
   tasks:
   - include: tasks/main.yml
   handlers:
