@@ -6,7 +6,7 @@ grafana_version: 1.8.1                      # Set version
 grafana_user: grafana
 grafana_group: "{{grafana_user}}"
 
-grafana_home: /var/lib/grafana
+grafana_home: /usr/lib/grafana
 
 grafana_index: grafana-dash
 
