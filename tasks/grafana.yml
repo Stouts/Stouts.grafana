@@ -1,0 +1,7 @@
+---
+
+- include: install.yml
+  tags: [grafana, grafana-install]
+
+- include: configure.yml
+  tags: [grafana, grafana-configure]

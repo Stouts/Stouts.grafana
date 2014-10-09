@@ -1,0 +1,19 @@
+---
+
+- name: grafana-configure | Setup grafana
+  template: src=grafana.js.j2 dest={{grafana_home}}/www/config.js owner={{grafana_user}} group={{grafana_group}}
+
+- name: grafana-configure | Setup passlib
+  apt: pkg=python-passlib
+  when: grafana_proxy_auth
+
+- name: grafana-configure | Encrypt http auth passwords
+  htpasswd: path={{grafana_home}}/.htpasswd name={{item.name}} password={{item.password}}
+  with_items: grafana_proxy_auth_users
+  when: grafana_proxy_auth
+
+- name: grafana-configure | Compile Nginx configuration
+  template: src=nginx.conf.j2 dest={{nginx_dir}}/sites-enabled/grafana.conf
+  when: grafana_proxy_nginx
+  notify:
+  - nginx reload
