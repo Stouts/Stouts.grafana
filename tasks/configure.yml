@@ -13,7 +13,7 @@
   when: grafana_proxy_auth
 
 - name: grafana-configure | Compile Nginx configuration
-  template: src=nginx.conf.j2 dest={{nginx_dir}}/sites-enabled/grafana.conf
+  template: src=nginx.conf.j2 dest={{nginx_dir|default('/etc/nginx')}}/sites-enabled/grafana.conf
   when: grafana_proxy_nginx
   notify:
   - nginx reload

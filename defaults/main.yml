@@ -14,10 +14,10 @@ grafana_datasources: []                     # Setup datasources
                                             # Example:
                                             # grafana_datasources:
                                             #   graphite:
-                                            #     type: 'graphite',
+                                            #     type: 'graphite'
                                             #     url: "http://my.graphite.server.com:8080"
                                             #   elasticsearch:
-                                            #     type: 'elasticsearch',
+                                            #     type: 'elasticsearch'
                                             #     url: "http://my.elastic.server.com:9200"
                                             #     index: "grafana-dash"
                                             #     grafanaDB: true
