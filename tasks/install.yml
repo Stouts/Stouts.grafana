@@ -8,9 +8,16 @@
 
 - name: grafana-install | Download Grafana
   get_url: url=http://grafanarel.s3.amazonaws.com/grafana-{{ grafana_version }}.tar.gz dest={{grafana_home}}/grafana-{{grafana_version}}.tar.gz
+  when: not grafana_source
 
 - name: grafana-install | Extract Grafana
   unarchive: src={{grafana_home}}/grafana-{{grafana_version}}.tar.gz dest={{grafana_home}} copy=false creates={{grafana_home}}/grafana-{{grafana_version}}/README.md
+  when: not grafana_source
 
 - name: grafana-install | Link Grafana to current version
   file: src={{grafana_home}}/grafana-{{grafana_version}} dest={{grafana_home}}/www state=link
+  when: not grafana_source
+
+- name: grafana-install | Download Grafana from source
+  git: repo=https://github.com/grafana/grafana.git dest={{grafana_home}}/www
+  when: grafana_source
