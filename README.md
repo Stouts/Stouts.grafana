@@ -1,7 +1,9 @@
 Stouts.grafana
 ==============
 
-[![Build Status](https://travis-ci.org/Stouts/Stouts.grafana.png)](https://travis-ci.org/Stouts/Stouts.grafana)
+[![Build Status](http://img.shields.io/travis/Stouts/Stouts.grafana.svg?style=flat-square)](https://travis-ci.org/Stouts/Stouts.grafana)
+[![Galaxy](http://img.shields.io/badge/galaxy-Stouts.grafana-blue.svg?style=flat-square)](https://galaxy.grafana.com/list#/roles/1907)
+[![Tag](http://img.shields.io/github/tag/Stouts/Stouts.grafana.svg?style=flat-square)]()
 
 Ansible role which manage [Grafana](http://http://grafana.org/)
 
@@ -57,7 +59,7 @@ grafana_plugins_dependencies: []            # Requirejs modules in plugins folde
 grafana_proxy_nginx: yes                    # Serve Grafana with Nginx
 grafana_proxy_port: 80
 grafana_proxy_hostname: "{{inventory_hostname}}"  # Set hostname
-grafana_proxy_log: /var/log/grafana.log
+grafana_proxy_log: /var/log/nginx/grafana.log
 grafana_proxy_auth: no                      # Enable Basic HTTP Authentication
 grafana_proxy_auth_users: []                # Setup users for the HTTP Auth
                                             # grafana_proxy_auth_users:

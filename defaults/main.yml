@@ -36,7 +36,7 @@ grafana_plugins_dependencies: []            # Requirejs modules in plugins folde
 grafana_proxy_nginx: yes                    # Serve Grafana with Nginx
 grafana_proxy_port: 80
 grafana_proxy_hostname: "{{inventory_hostname}}"  # Set hostname
-grafana_proxy_log: /var/log/grafana.log
+grafana_proxy_log: /var/log/nginx/grafana.log
 grafana_proxy_auth: no                      # Enable Basic HTTP Authentication
 grafana_proxy_auth_users: []                # Setup users for the HTTP Auth
                                             # grafana_proxy_auth_users:
