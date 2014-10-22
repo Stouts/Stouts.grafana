@@ -5,10 +5,10 @@ grafana_version: 1.8.1                      # Set version
 grafana_source: no                          # Set 'yes' for build grafana from source
                                             # Git should be installed
 
-grafana_user: grafana
+grafana_user: www-data
 grafana_group: "{{grafana_user}}"
 
-grafana_home: /usr/lib/grafana
+grafana_home: /var/www/grafana
 
 grafana_index: grafana-dash
 

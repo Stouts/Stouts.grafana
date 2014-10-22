@@ -1,7 +1,7 @@
 ---
 
 - name: grafana-install | Ensure Grafana user is exists
-  user: name={{ grafana_user }}
+  user: name={{ grafana_user }} system=yes
 
 - name: grafana-install | Make Grafana home
   file: path={{grafana_home}} state=directory owner={{grafana_user}} group={{grafana_group}} mode=0755

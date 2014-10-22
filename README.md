@@ -8,6 +8,13 @@ Ansible role which manage [Grafana](http://http://grafana.org/)
 * Install and configure Grafana
 * Setup a Grafana proxy with nginx (supports http auth)
 
+#### Dependencies
+
+The roles are recomended to install:
+
+* [Stouts.nginx](https://github.com/Stouts/Stouts.nginx) - for proxing Grafana with Nginx
+* [Stouts.elasticsearch](https://github.com/Stouts/Stouts.elasticsearch) - for using as DB
+
 
 #### Variables
 
@@ -16,11 +23,13 @@ Here is the list of all variables and their default values:
 ```yaml
 grafana_enabled: yes                        # The role is enabled
 grafana_version: 1.8.1                      # Set version
+grafana_source: no                          # Set 'yes' for build grafana from source
+                                            # Git should be installed
 
-grafana_user: grafana
+grafana_user: www-data
 grafana_group: "{{grafana_user}}"
 
-grafana_home: /var/lib/grafana
+grafana_home: /var/www/grafana
 
 grafana_index: grafana-dash
 
