@@ -3,23 +3,22 @@
 
 server {
     listen            {{grafana_proxy_port}};
-    {% if grafana_proxy_hostname %}
+{% if grafana_proxy_hostname %}
     server_name       {{grafana_proxy_hostname}};
-    {% endif %}
+{% endif %}
+
+{% if grafana_proxy_auth %}
+    auth_basic "Restricted";
+    auth_basic_user_file {{grafana_home}}/.htpasswd;
+{% endif %}
 
     location /robots.txt {
         return 200 "User-agent: *\nDisallow: /";
     }
 
     location / {
-
         root {{grafana_home}}/www;
         expires max;
-
-        {% if grafana_proxy_auth %}
-        auth_basic "Restricted";
-        auth_basic_user_file {{grafana_home}}/.htpasswd;
-        {% endif %}
     }
 
     error_log         {{grafana_proxy_log}};
