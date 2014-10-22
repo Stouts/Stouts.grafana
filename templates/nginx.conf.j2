@@ -7,6 +7,10 @@ server {
     server_name       {{grafana_proxy_hostname}};
     {% endif %}
 
+    location /robots.txt {
+        return 200 "User-agent: *\nDisallow: /";
+    }
+
     location / {
 
         root {{grafana_home}}/www;
