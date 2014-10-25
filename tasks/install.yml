@@ -18,6 +18,10 @@
   file: src={{grafana_home}}/grafana-{{grafana_version}} dest={{grafana_home}}/www state=link
   when: not grafana_source
 
+- name: grafana-install | Check for Grafana is installed
+  stat: path={{grafana_home}}/www
+  register: grafana_www
+
 - name: grafana-install | Download Grafana from source
   git: repo=https://github.com/grafana/grafana.git dest={{grafana_home}}/www
-  when: grafana_source
+  when: grafana_source and not grafana_www.stat.exists
