@@ -12,6 +12,10 @@ server {
     auth_basic_user_file {{grafana_home}}/.htpasswd;
 {% endif %}
 
+{% for line in grafana_proxy_options %}
+    {{line}}
+{% endfor %}
+
     location /robots.txt {
         return 200 "User-agent: *\nDisallow: /";
     }

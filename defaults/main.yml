@@ -41,5 +41,6 @@ grafana_proxy_auth: no                      # Enable Basic HTTP Authentication
 grafana_proxy_auth_users: []                # Setup users for the HTTP Auth
                                             # grafana_proxy_auth_users:
                                             # - { name: team, password: secret }
+grafana_proxy_options: []                   # A list of lines which will be added to NGINX configuration
 
 # vim:sw=2
