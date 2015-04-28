@@ -7,14 +7,6 @@ Stouts.grafana
 Ansible role which manage [Grafana](http://http://grafana.org/)
 
 * Install and configure Grafana
-* Setup a Grafana proxy with nginx (supports http auth)
-
-#### Dependencies
-
-The roles are recomended to install:
-
-* [Stouts.nginx](https://github.com/Stouts/Stouts.nginx) - for proxing Grafana with Nginx
-* [Stouts.elasticsearch](https://github.com/Stouts/Stouts.elasticsearch) - for using as DB
 
 
 #### Variables

@@ -4,7 +4,7 @@ grafana_enabled: yes                        # The role is enabled
 grafana_apt_repository: deb https://packagecloud.io/grafana/stable/debian/ wheezy main
 grafana_apt_key: https://packagecloud.io/gpg.key
 
-grafana_version: 2.0.1                      # Set version
+grafana_version: 2.0.2                      # Set version
 
 grafana_app_mode: production
 
