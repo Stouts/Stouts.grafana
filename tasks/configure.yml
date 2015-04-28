@@ -1,22 +1,26 @@
 ---
 
 - name: grafana-configure | Setup grafana
-  template: src=config.js.j2 dest={{grafana_home}}/www/config.js owner={{grafana_user}} group={{grafana_group}}
+  template: src=grafana.ini.j2 dest=/etc/grafana/grafana.ini
+  notify: grafana restart
 
-- name: grafana-configure | Setup passlib
-  apt: pkg=python-passlib
-  when: grafana_proxy_auth
+- name: grafana-configure | Ensure that Grafana-Server is started
+  service: name=grafana-server state=started enabled=yes
 
-- name: grafana-configure | Encrypt http auth passwords
-  htpasswd: path={{grafana_home}}/.htpasswd name={{item.name}} password={{item.password}}
-  with_items: grafana_proxy_auth_users
-  when: grafana_proxy_auth
+# - name: grafana-configure | Setup passlib
+  # apt: pkg=python-passlib
+  # when: grafana_proxy_auth
 
-- name: grafana-configure | Compile Nginx configuration
-  template: src=nginx.conf.j2 dest={{nginx_dir|default('/etc/nginx')}}/sites-available/grafana.conf
-  when: grafana_proxy_nginx
-  notify: [ nginx reload ]
+# - name: grafana-configure | Encrypt http auth passwords
+  # htpasswd: path={{grafana_home}}/.htpasswd name={{item.name}} password={{item.password}}
+  # with_items: grafana_proxy_auth_users
+  # when: grafana_proxy_auth
 
-- name: grafana-configure | Enable Nginx site
-  file: src={{nginx_dir|default('/etc/nginx')}}/sites-available/grafana.conf dest={{nginx_dir|default('/etc/nginx')}}/sites-enabled/grafana.conf state=link
-  when: grafana_proxy_nginx
+# - name: grafana-configure | Compile Nginx configuration
+  # template: src=nginx.conf.j2 dest={{nginx_dir|default('/etc/nginx')}}/sites-available/grafana.conf
+  # when: grafana_proxy_nginx
+  # notify: [ nginx reload ]
+
+# - name: grafana-configure | Enable Nginx site
+  # file: src={{nginx_dir|default('/etc/nginx')}}/sites-available/grafana.conf dest={{nginx_dir|default('/etc/nginx')}}/sites-enabled/grafana.conf state=link
+  # when: grafana_proxy_nginx

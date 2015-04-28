@@ -1,4 +1,4 @@
 ---
 
-- name: nginx reload
-  service: name=nginx state=reloaded
+- name: grafana restart
+  service: name=grafana-server state=restarted
