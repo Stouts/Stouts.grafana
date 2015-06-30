@@ -71,7 +71,19 @@ grafana_github_scopes: user:email
 grafana_github_auth_url: https://github.com/login/oauth/authorize
 grafana_github_token_url: https://github.com/login/oauth/access_token
 grafana_github_api_url: https://api.github.com/user
+grafana_github_allow_sign_up: false
 grafana_github_allowed_domains: mycompany.com othercompany.com
+
+# Google Auth
+grafana_google_enabled: no                  # Enable Google Auth
+grafana_google_client_id: some_id
+grafana_google_client_secret: some_secret
+grafana_google_scopes: https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
+grafana_google_auth_url: https://accounts.google.com/o/oauth2/auth
+grafana_google_token_url: https://accounts.google.com/o/oauth2/token
+grafana_google_api_url: https://www.googleapis.com/oauth2/v1/userinfo
+grafana_google_allow_sign_up: false
+grafana_google_allowed_domains: mycompany.com othercompany.com
 
 # Logging
 grafana_log_mode: console, file
