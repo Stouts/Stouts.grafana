@@ -10,3 +10,5 @@
 
 - name: grafana-install | Install Grafana
   apt: name="{{grafana_release}}"
+  notify:
+    - grafana restart
