@@ -145,21 +145,24 @@ scopes = {{ grafana_github_scopes }}
 auth_url = {{ grafana_github_auth_url }}
 token_url = {{ grafana_github_token_url }}
 api_url = {{ grafana_github_api_url }}
+allow_sign_up = {{ grafana_github_allow_sign_up }}
 
 # Uncomment bellow to only allow specific email domains
 allowed_domains = {{ grafana_github_allowed_domains }}
 
 #################################### Google Auth ##########################
 [auth.google]
-;enabled = false
-;client_id = some_client_id
-;client_secret = some_client_secret
-;scopes = https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
-;auth_url = https://accounts.google.com/o/oauth2/auth
-;token_url = https://accounts.google.com/o/oauth2/token
-;api_url = https://www.googleapis.com/oauth2/v1/userinfo
+enabled = {{ grafana_google_enabled|to_nice_json }}
+client_id = {{ grafana_google_client_id }}
+client_secret = {{ grafana_google_client_secret }}
+scopes = {{ grafana_google_scopes }}
+auth_url = {{ grafana_google_auth_url }}
+token_url = {{ grafana_google_token_url }}
+api_url = {{ grafana_google_api_url }}
+allow_sign_up = {{ grafana_google_allow_sign_up }}
+
 # Uncomment bellow to only allow specific email domains
-; allowed_domains = mycompany.com othercompany.com
+allowed_domains = {{ grafana_google_allowed_domains }}
 
 #################################### Logging ##########################
 [log]
