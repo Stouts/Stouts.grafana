@@ -32,6 +32,10 @@ http_port = {{ grafana_http_port }}
 # The public facing domain name used to access grafana from a browser
 domain = {{ grafana_domain }}
 
+# Redirect to correct domain if host header does not match domain
+# Prevents DNS rebinding attacks
+enforce_domain = {{ grafana_enforce_domain|to_nice_json }}
+
 # The full public facing url
 root_url = {{ grafana_root_url }}
 
@@ -65,24 +69,26 @@ path = {{ grafana_path }}
 
 #################################### Session ####################################
 [session]
-# Either "memory", "file", "redis", "mysql", default is "memory"
+# Either "memory", "file", "redis", "mysql", "postgres", default is "file"
 provider = {{ grafana_provider }}
 
 # Provider config options
 # memory: not have any config yet
 # file: session dir path, is relative to grafana data_path
-# redis: config like redis server addr, poolSize, password, e.g. `127.0.0.1:6379,100,grafana`
-# mysql: go-sql-driver/mysql dsn config string, e.g. `user:password@tcp(127.0.0.1)/database_name`
+# redis: config like redis server addr, poolSize, password, e.g. `addr=127.0.0.1:6379,pool_size=100,db=grafana`
+# postgres: user=a password=b host=localhost port=5432 dbname=c sslmode=disable
+# mysql: go-sql-driver/mysql dsn config string, e.g. `user:password@tcp(127.0.0.1:3306)/database_name`
 provider_config = {{ grafana_provider_config }}
 
 # Session cookie name
 cookie_name = {{ grafana_cookie_name }}
 
 # If you use session in https only, default is false
-cookie_secure = {{ grafana_cookie_secure }}
+cookie_secure = {{ grafana_cookie_secure|to_nice_json}}
 
 # Session life time, default is 86400
 session_life_time = {{ grafana_session_life_time }}
+gc_interval_time = {{ grafana_gc_interval_time }}
 
 #################################### Analytics ####################################
 [analytics]
@@ -94,6 +100,9 @@ reporting_enabled = {{ grafana_reporting_enabled|to_nice_json }}
 
 # Google Analytics universal tracking code, only enabled if you specify an id here
 google_analytics_ua_id = {{ grafana_google_analytics_ua_id }}
+
+# Google Tag Manager ID, only enabled if you specify an id here
+google_tag_manager_id = {{ grafana_google_tag_manager_id }}
 
 #################################### Security ####################################
 [security]
@@ -111,6 +120,12 @@ login_remember_days = {{ grafana_login_remember_days }}
 cookie_username = {{ grafana_cookie_username }}
 cookie_remember_name = {{ grafana_cookie_remember_name }}
 
+# disable gravatar profile images
+disable_gravatar = {{ grafana_disable_gravatar|to_nice_json}}
+
+# data source proxy whitelist (ip_or_domain:port seperated by spaces)
+data_source_proxy_whitelist =  {{ grafana_data_source_proxy_whitelist }}
+
 #################################### Users ####################################
 [users]
 # disable user signup / registration
@@ -124,6 +139,9 @@ auto_assign_org = {{ grafana_auto_assign_org|to_nice_json }}
 
 # Default role new users will be automatically assigned (if disabled above is set to true)
 auto_assign_org_role = {{ grafana_auto_assign_org_role }}
+
+# Require email validation before sign up completes
+verify_email_enabled = {{ grafana_verify_email_enabled|to_nice_json }}
 
 #################################### Anonymous Auth ##########################
 [auth.anonymous]
@@ -145,10 +163,11 @@ scopes = {{ grafana_github_scopes }}
 auth_url = {{ grafana_github_auth_url }}
 token_url = {{ grafana_github_token_url }}
 api_url = {{ grafana_github_api_url }}
-allow_sign_up = {{ grafana_github_allow_sign_up }}
+team_ids = {{ grafana_github_team_ids }}
+allowed_organizations =  {{ grafana_github_allowed_organizations }}
+
 
 # Uncomment bellow to only allow specific email domains
-allowed_domains = {{ grafana_github_allowed_domains }}
 
 #################################### Google Auth ##########################
 [auth.google]
@@ -159,10 +178,40 @@ scopes = {{ grafana_google_scopes }}
 auth_url = {{ grafana_google_auth_url }}
 token_url = {{ grafana_google_token_url }}
 api_url = {{ grafana_google_api_url }}
-allow_sign_up = {{ grafana_google_allow_sign_up }}
 
 # Uncomment bellow to only allow specific email domains
 allowed_domains = {{ grafana_google_allowed_domains }}
+
+#################################### Basic Auth ##########################
+[auth.basic]
+enabled = {{ grafana_auth_basic_enabled|to_nice_json}}
+
+#################################### Auth Proxy ##########################
+[auth.proxy]
+enabled = {{ grafana_auth_proxy_enabled|to_nice_json}}
+header_name = {{ grafana_auth_proxy_header_name }}
+header_property = {{ grafana_auth_proxy_header_property }}
+auto_sign_up = {{ grafana_auth_proxy_auto_sign_up|to_nice_json}}
+
+#################################### Auth LDAP ##########################
+[auth.ldap]
+enabled = {{ grafana_auth_ldap_enabled|to_nice_json}}
+config_file = {{ grafana_auth_ldap_config_file }}
+
+#################################### SMTP / Emailing ##########################
+[smtp]
+enabled = {{ grafana_smtp_enabled|to_nice_json}}
+host = {{ grafana_smtp_host }}
+user = {{ grafana_smtp_user }}
+password = {{ grafana_smtp_password }}
+cert_file = {{ grafana_smtp_cert_file }}
+key_file = {{ grafana_smtp_key_file }}
+skip_verify = {{ grafana_smtp_skip_verify|to_nice_json}}
+from_address = {{ grafana_smtp_from_address }}
+
+[emails]
+welcome_email_on_sign_up =  {{ grafana_emails_welcome_email_on_sign_up|to_nice_json}}
+templates_pattern =  {{ grafana_templates_pattern }}
 
 #################################### Logging ##########################
 [log]
@@ -203,3 +252,43 @@ level = {{ grafana_log_level }}
 ;enabled = false
 ;rabbitmq_url = amqp://localhost/
 ;exchange = grafana_events
+
+#################################### Dashboard JSON files ##########################
+[dashboards.json]
+enabled = {{ grafana_dashboard_json_enabled|to_nice_json}}
+path = {{ grafana_dashboard_json_path }}
+
+#################################### Usage Quotas ##########################
+[quota]
+enabled = {{ grafana_quota_enabled|to_nice_json }}
+
+#### set quotas to -1 to make unlimited. ####
+# limit number of users per Org.
+org_user = {{ grafana_quota_org_user }}
+
+# limit number of dashboards per Org.
+org_dashboard = {{ grafana_quota_org_dashboard }}
+
+# limit number of data_sources per Org.
+org_data_source = {{ grafana_quota_org_data_source }}
+
+# limit number of api_keys per Org.
+org_api_key =  {{ grafana_quota_org_api_key }}
+
+# limit number of orgs a user can create.
+user_org =  {{ grafana_quota_user_org }}
+
+# Global limit of users.
+global_user = {{ grafana_quota_global_user }}
+
+# global limit of orgs.
+global_org = {{ grafana_quota_global_org }}
+
+# global limit of dashboards
+global_dashboard = {{ grafana_quota_global_dashboard }}
+
+# global limit of api_keys
+global_api_key = {{ grafana_quota_global_api_key }}
+
+# global limit on number of logged in users.
+global_session = {{ grafana_quota_global_session }}
