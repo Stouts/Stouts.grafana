@@ -4,7 +4,7 @@ grafana_enabled: true                        # The role is enabled
 grafana_apt_repository: deb https://packagecloud.io/grafana/stable/debian/ wheezy main
 grafana_apt_key: https://packagecloud.io/gpg.key
 
-grafana_version: 2.5.0                      # Set version
+grafana_version: 2.6.0                      # Set version
 
 grafana_app_mode: production
 
@@ -139,5 +139,14 @@ grafana_quota_global_org: -1                # global limit of orgs.
 grafana_quota_global_dashboard: -1          # global limit of dashboards
 grafana_quota_global_api_key: -1            # global limit of api_keys
 grafana_quota_global_session: -1      # global limit on number of logged in users.
+
+# Setup nginx configuration
+grafana_nginx: false
+grafana_nginx_servername: "{{inventory_hostname}}"
+grafana_nginx_ssl: false
+grafana_nginx_ssl_crt: ""
+grafana_nginx_ssl_key: ""
+grafana_nginx_ssl_redirect: "{{grafana_nginx_ssl}}"
+grafana_nginx_port: 80
 
 # vim:sw=2

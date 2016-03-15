@@ -16,11 +16,7 @@
   # with_items: grafana_proxy_auth_users
   # when: grafana_proxy_auth
 
-# - name: grafana-configure | Compile Nginx configuration
-  # template: src=nginx.conf.j2 dest={{nginx_dir|default('/etc/nginx')}}/sites-available/grafana.conf
-  # when: grafana_proxy_nginx
-  # notify: [ nginx reload ]
-
-# - name: grafana-configure | Enable Nginx site
-  # file: src={{nginx_dir|default('/etc/nginx')}}/sites-available/grafana.conf dest={{nginx_dir|default('/etc/nginx')}}/sites-enabled/grafana.conf state=link
-  # when: grafana_proxy_nginx
+- name: grafana-configure | Compile Nginx configuration
+  template: src=nginx.conf.j2 dest={{nginx_dir|default('/etc/nginx')}}/sites-enabled/grafana.conf
+  when: grafana_nginx
+  notify:  nginx reload 
