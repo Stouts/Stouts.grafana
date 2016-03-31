@@ -8,7 +8,10 @@
 
 - set_fact: grafana_release='grafana={{grafana_version}}'
 
+- name: grafana-install-prerequisites | Install Prerequisites
+  apt: name="apt-transport-https"
+
 - name: grafana-install | Install Grafana
-  apt: name="{{grafana_release}}"
+  apt: name="{{grafana_release}}" update_cache=true
   notify:
     - grafana restart
