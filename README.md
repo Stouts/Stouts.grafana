@@ -14,17 +14,18 @@ Ansible role which manage [Grafana](http://http://grafana.org/)
 Here is the list of all variables and their default values:
 
 ```yaml
-grafana_enabled: true                        # The role is enabled
+grafana_enabled: true                       # The role is enabled
 grafana_apt_repository: deb https://packagecloud.io/grafana/stable/debian/ wheezy main
 grafana_apt_key: https://packagecloud.io/gpg.key
 
-grafana_version: 2.5.0                      # Set version
+grafana_version: 3.0.1                      # Set version
 
 grafana_app_mode: production
 
 # Paths
 grafana_data: /var/lib/grafana
 grafana_logs: /var/log/grafana
+grafana_plugins: "{{ grafana_data }}/plugins"
 
 # Server
 grafana_protocol: http
@@ -52,14 +53,13 @@ grafana_path: grafana.db                    # For "sqlite3" only, path relative 
 grafana_provider: file                      # Either "memory", "file", "redis", "mysql", default is "memory"
 grafana_provider_config: sessions
 grafana_cookie_name: grafana_sess           # Session cookie name
-grafana_cookie_secure: false                   # If you use session in https only
+grafana_cookie_secure: false                # If you use session in https only
 grafana_session_life_time: 86400            # Session life time, default is 86400
-grafana_gc_interval_time: 86400
 
 # Analytics
-grafana_reporting_enabled: true              # Server reporting, sends usage counters to stats.grafana.org every 24 hours.
+grafana_reporting_enabled: true             # Server reporting, sends usage counters to stats.grafana.org every 24 hours.
+grafana_check_for_updates: true             # Set to false to disable all checks to https://grafana.net
 grafana_google_analytics_ua_id:             # Google Analytics universal tracking code, only enabled if you specify an id here
-grafana_google_tag_manager_id:              # Google Tag Manager ID, only enabled if you specify an id here
 
 # Security
 grafana_admin_user: admin                   # Default admin username
@@ -71,13 +71,17 @@ grafana_cookie_remember_name: grafana_remember
 grafana_disable_gravatar: false                # disable gravatar profile images
 grafana_data_source_proxy_whitelist:        # data source proxy whitelist (ip_or_domain:port seperated by spaces)
 
+# Snapshots
+grafana_external_enabled: true
+grafana_external_snapshot_url: https://snapshots-origin.raintank.io
+grafana_external_snapshot_name: Publish to snapshot.raintank.io
 
 # Users
-grafana_allow_sign_up: true                  # Disable user signup/registration
-grafana_allow_org_create: true               # Allow falsen admin users to create organizations
-grafana_auto_assign_org: true                # Set to true to automatically assign new users to the default organization (id 1)
+grafana_allow_sign_up: true                 # Disable user signup/registration
+grafana_allow_org_create: true              # Allow falsen admin users to create organizations
+grafana_auto_assign_org: true               # Set to true to automatically assign new users to the default organization (id 1)
 grafana_auto_assign_org_role: Viewer        # Default role new users will be automatically assigned
-grafana_verify_email_enabled: false
+grafana_login_hint: email or username       # Background text for the user field on the login page
 
 # Anonymous Auth
 grafana_anonymous_enabled: false               # Enable Anonymous access
@@ -94,6 +98,7 @@ grafana_github_token_url: https://github.com/login/oauth/access_token
 grafana_github_api_url: https://api.github.com/user
 grafana_github_team_ids:
 grafana_github_allowed_organizations:
+grafana_github_auth_allow_sign_up: true
 
 # Google Auth
 grafana_google_enabled: false                  # Enable Google Auth
@@ -104,6 +109,7 @@ grafana_google_auth_url: https://accounts.google.com/o/oauth2/auth
 grafana_google_token_url: https://accounts.google.com/o/oauth2/token
 grafana_google_api_url: https://www.googleapis.com/oauth2/v1/userinfo
 grafana_google_allowed_domains: mycompany.com othercompany.com
+grafana_google_auth_allow_sign_up: true
 
 # Basic Auth
 grafana_auth_basic_enabled: true
@@ -128,29 +134,29 @@ grafana_smtp_key_file:
 grafana_smtp_skip_verify: false
 grafana_smtp_from_address: admin@grafana.localhost
 grafana_emails_welcome_email_on_sign_up: false
-grafana_templates_pattern: emails/*.html
 
 # Logging
 grafana_log_mode: console, file
 grafana_log_buffer_len: 10000
 grafana_log_level: Info
 
+# AMPQ Event Publisher
+grafana_ampq_enabled: false
+grafana_ampq_rabbitmq_url: amqp://localhost/
+grafana_ampq_exchange: grafana_events
+
 # Dashboard JSON files
 grafana_dashboard_json_enabled: false
 grafana_dashboard_json_path: /var/lib/grafana/dashboards
 
-# Usage Quotas
-grafana_quota_enabled: false
-grafana_quota_org_user: 10                  # limit number of users per Org.
-grafana_quota_org_dashboard: 100            # limit number of dashboards per Org.
-grafana_quota_org_data_source: 10           # limit number of data_sources per Org.
-grafana_quota_org_api_key: 10               # limit number of api_keys per Org.
-grafana_quota_user_org: 10                  # limit number of orgs a user can create.
-grafana_quota_global_user: -1               # Global limit of users.
-grafana_quota_global_org: -1                # global limit of orgs.
-grafana_quota_global_dashboard: -1          # global limit of dashboards
-grafana_quota_global_api_key: -1            # global limit of api_keys
-grafana_quota_global_session: -1            # global limit on number of logged in users.
+# Setup nginx configuration
+grafana_nginx: false
+grafana_nginx_servername: "{{inventory_hostname}}"
+grafana_nginx_ssl: false
+grafana_nginx_ssl_crt: ""
+grafana_nginx_ssl_key: ""
+grafana_nginx_ssl_redirect: "{{grafana_nginx_ssl}}"
+grafana_nginx_port: 80
 
 ```
 
