@@ -15,10 +15,10 @@ Here is the list of all variables and their default values:
 
 ```yaml
 grafana_enabled: true                       # The role is enabled
-grafana_apt_repository: deb https://packagecloud.io/grafana/stable/debian/ wheezy main
+grafana_apt_repository: deb https://packagecloud.io/grafana/stable/debian/ jessie main
 grafana_apt_key: https://packagecloud.io/gpg.key
 
-grafana_version: 3.0.1                      # Set version
+grafana_version: 3.1.1                      # Set version
 
 grafana_app_mode: production
 
@@ -26,6 +26,7 @@ grafana_app_mode: production
 grafana_data: /var/lib/grafana
 grafana_logs: /var/log/grafana
 grafana_plugins: "{{ grafana_data }}/plugins"
+grafana_plugins_install: []
 
 # Server
 grafana_protocol: http
