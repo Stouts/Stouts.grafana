@@ -12,6 +12,6 @@
   apt: name="apt-transport-https"
 
 - name: grafana-install | Install Grafana
-  apt: name="{{grafana_release}}" update_cache=true
+  apt: name="{{grafana_release}}"
   notify:
   - grafana restart

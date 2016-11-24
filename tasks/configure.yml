@@ -9,7 +9,8 @@
 
 - name: grafana-configure | Install plugins
   command: grafana-cli plugins install {{item}}
-  with_items: grafana_plugins_install
+  with_items: "{{grafana_plugins_install}}"
+#  when: grafana_plugins_install|length>0
   notify: grafana restart
 
 # - name: grafana-configure | Setup passlib
