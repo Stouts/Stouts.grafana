@@ -11,7 +11,14 @@
 - name: grafana-install-prerequisites | Install Prerequisites
   apt: name="apt-transport-https"
 
-- name: grafana-install | Install Grafana
-  apt: name="{{grafana_release}}" update_cache=true
+- name: grafana-install | Install Grafana Release
+  apt: name="{{grafana_release}}"
+  when: grafana_version != "latest"
+  notify:
+    - grafana restart
+
+- name: grafana-install | Install Grafana Latest
+  apt: name="grafana"
+  when: grafana_version == "latest"
   notify:
   - grafana restart
