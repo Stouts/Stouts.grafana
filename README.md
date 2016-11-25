@@ -18,7 +18,7 @@ grafana_enabled: true                       # The role is enabled
 grafana_apt_repository: deb https://packagecloud.io/grafana/stable/debian/ jessie main
 grafana_apt_key: https://packagecloud.io/gpg.key
 
-grafana_version: 3.1.1                      # Set version
+grafana_version: 3.1.1-*                    # Set version (set to latest to install latest version)
 
 grafana_app_mode: production
 
