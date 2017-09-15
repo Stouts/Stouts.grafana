@@ -33,6 +33,7 @@ grafana_protocol: http
 grafana_http_addr: 0.0.0.0                  # The ip address to bind to
 grafana_http_port: 3000                     # The http port  to use
 grafana_domain: localhost                   # The public facing domain name used to access grafana from a browser
+grafana_api_base_url: "http://{{ grafana_domain }}"
 grafana_enforce_domain: false
 grafana_root_url: "%(protocol)s://%(domain)s:%(http_port)s/"
 grafana_router_logging: false                  # Log web requests
@@ -158,6 +159,9 @@ grafana_nginx_ssl_crt: ""
 grafana_nginx_ssl_key: ""
 grafana_nginx_ssl_redirect: "{{grafana_nginx_ssl}}"
 grafana_nginx_port: 80
+
+# Grafana users (add using api)
+grafana_users: []                              # list of dict with format: {username: 'user1', password: 'pass1'}
 
 ```
 

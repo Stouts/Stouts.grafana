@@ -6,3 +6,7 @@
 
 - include: configure.yml
   tags: [grafana, grafana-configure]
+
+- include: users.yml
+  tags: [grafana, grafana-users]
+  when: grafana_users|length > 0
