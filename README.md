@@ -4,7 +4,7 @@ Stouts.grafana
 [![Build Status](http://img.shields.io/travis/Stouts/Stouts.grafana.svg?style=flat-square)](https://travis-ci.org/Stouts/Stouts.grafana)
 [![Galaxy](http://img.shields.io/badge/galaxy-Stouts.grafana-blue.svg?style=flat-square)](https://galaxy.ansible.com/list#/roles/1907)
 
-Ansible role which manage [Grafana](http://http://grafana.org/)
+Ansible role which manage [Grafana](http://grafana.org/)
 
 * Install and configure Grafana
 
