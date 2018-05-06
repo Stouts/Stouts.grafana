@@ -1,7 +1,9 @@
 ---
 
 - name: grafana restart
+  become: yes
   service: name=grafana-server state=restarted
 
 - name: nginx reload
+  become: yes
   service: name=nginx state=reloaded
