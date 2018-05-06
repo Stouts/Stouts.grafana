@@ -1,27 +1,31 @@
 ---
 
 - name: grafana-configure | Setup grafana
+  become: yes
   template: src=grafana.ini.j2 dest=/etc/grafana/grafana.ini
   notify: grafana restart
 
 - name: grafana-configure | Ensure that Grafana-Server is started
+  become: yes
   service: name=grafana-server state=started enabled=yes
 
 - name: grafana-configure | Install plugins
+  become: yes
   command: "grafana-cli plugins install {{item}}"
   with_items: "{{grafana_plugins_install}}"
   notify: grafana restart
 
 # - name: grafana-configure | Setup passlib
-  # apt: pkg=python-passlib
-  # when: grafana_proxy_auth
+# apt: pkg=python-passlib
+# when: grafana_proxy_auth
 
 # - name: grafana-configure | Encrypt http auth passwords
-  # htpasswd: path={{grafana_home}}/.htpasswd name={{item.name}} password={{item.password}}
-  # with_items: grafana_proxy_auth_users
-  # when: grafana_proxy_auth
+# htpasswd: path={{grafana_home}}/.htpasswd name={{item.name}} password={{item.password}}
+# with_items: grafana_proxy_auth_users
+# when: grafana_proxy_auth
 
 - name: grafana-configure | Compile Nginx configuration
+  become: yes
   template: src=nginx.conf.j2 dest={{nginx_dir|default('/etc/nginx')}}/sites-enabled/grafana.conf
   when: grafana_nginx
-  notify:  nginx reload 
+  notify: nginx reload

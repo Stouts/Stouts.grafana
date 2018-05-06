@@ -1,24 +1,29 @@
 ---
 
 - name: grafana-install-prerequisites | Install Prerequisites
+  become: yes
   apt: name="apt-transport-https"
 
 - name: grafana-install | Add debian repository pt. 1
+  become: yes
   apt_key: url='{{grafana_apt_key}}' id=D59097AB
 
 - name: grafana-install | Add debian repository pt. 2
+  become: yes
   apt_repository: repo='{{grafana_apt_repository}}'
 
 - set_fact: grafana_release='grafana={{grafana_version}}'
 
 - name: grafana-install | Install Grafana Release
+  become: yes
   apt: name="{{grafana_release}}"
   when: grafana_version != "latest"
   notify:
     - grafana restart
 
 - name: grafana-install | Install Grafana Latest
+  become: yes
   apt: name="grafana"
   when: grafana_version == "latest"
   notify:
-  - grafana restart
+    - grafana restart
