@@ -1,0 +1,33 @@
+---
+
+- name: Add repository
+  yum_repository:
+        name: 'grafana'
+        baseurl: '{{ grafana_yum_reposotory }}'
+        repo_gpgcheck: yes
+        gpgcheck: yes
+        enabled: yes
+        gpgkey: '{{ grafana_yum_key }}'
+        sslverify: yes
+        sslcacert: '/etc/pki/tls/certs/ca-bundle.crt'
+        description: 'Grafana repo'
+        state: present
+  tags: [grafana, grafana-install]
+
+- set_fact: grafana_release='grafana-{{grafana_version}}'
+  tags: [grafana, grafana-install]
+
+- name: Install grafana | Install Grafana Release
+  yum: name="{{ grafana_release }}"
+  when: grafana_version != "latest"
+  notify:
+      - grafana restart
+  tags: [grafana, grafana-install]
+
+- name: Install grafana | Install Grafana Latest
+  yum: name="grafana"
+  when: grafana_version == "latest"
+  notify:
+      - grafana restart
+  tags: [grafana, grafana-install]
+

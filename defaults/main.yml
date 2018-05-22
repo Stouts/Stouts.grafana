@@ -3,6 +3,8 @@
 grafana_enabled: true                       # The role is enabled
 grafana_apt_repository: deb https://packagecloud.io/grafana/stable/debian/ jessie main
 grafana_apt_key: https://packagecloud.io/gpg.key
+grafana_yum_reposotory: https://packagecloud.io/grafana/stable/el/7/$basearch
+grafana_yum_key: https://packagecloud.io/gpg.key https://grafanarel.s3.amazonaws.com/RPM-GPG-KEY-grafana
 
 grafana_version: 4.1.2-*                      # Set version (set to latest to install latest version)
 
