@@ -4,5 +4,9 @@
   when: ansible_os_family == 'Debian'
   tags: [grafana, grafana-install]
 
+- include: install.rhel.yml
+  when: ansible_os_family == 'RedHat'
+  tags: [grafana, grafana-install]
+
 - include: configure.yml
   tags: [grafana, grafana-configure]
