@@ -7,9 +7,18 @@
 - name: grafana-configure | Ensure that Grafana-Server is started
   service: name=grafana-server state=started enabled=yes
 
+- name: grafana-configure | Check installed plugins
+  raw: "grafana-cli plugins ls |tail -n +2 |head -n -3 |awk '{print $1}'"
+  changed_when: false
+  register: result
+
+- set_fact:
+    grafana_plugins_to_install: "{{ grafana_plugins_install| difference(result.stdout_lines) }}"
+
 - name: grafana-configure | Install plugins
   command: "grafana-cli plugins install {{item}}"
-  with_items: "{{grafana_plugins_install}}"
+  with_items: "{{grafana_plugins_to_install}}"
+  when: grafana_plugins_to_install is defined
   notify: grafana restart
 
 # - name: grafana-configure | Setup passlib
@@ -24,4 +33,4 @@
 - name: grafana-configure | Compile Nginx configuration
   template: src=nginx.conf.j2 dest={{nginx_dir|default('/etc/nginx')}}/sites-enabled/grafana.conf
   when: grafana_nginx
-  notify:  nginx reload 
+  notify:  nginx reload
