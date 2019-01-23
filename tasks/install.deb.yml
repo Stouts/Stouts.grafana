@@ -4,7 +4,7 @@
   apt: name="apt-transport-https"
 
 - name: grafana-install | Add debian repository pt. 1
-  apt_key: url='{{grafana_apt_key}}' id=D59097AB
+  apt_key: url='{{grafana_apt_key}}' id=id=0D224E82057BCEE1321424B1CA6D481DBD044C76
 
 - name: grafana-install | Add debian repository pt. 2
   apt_repository: repo='{{grafana_apt_repository}}'
