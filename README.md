@@ -15,8 +15,9 @@ Here is the list of all variables and their default values:
 
 ```yaml
 grafana_enabled: true                       # The role is enabled
-grafana_apt_repository: deb https://packagecloud.io/grafana/stable/debian/ jessie main
-grafana_apt_key: https://packagecloud.io/gpg.key
+grafana_apt_repository: deb https://packages.grafana.com/oss/deb stable main
+grafana_apt_key: https://packages.grafana.com/gpg.key
+grafana_apt_key_id: 24098CB6
 
 grafana_version: 3.1.1-*                    # Set version (set to latest to install latest version)
 
