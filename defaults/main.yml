@@ -1,7 +1,7 @@
 ---
 
 grafana_enabled: true                       # The role is enabled
-grafana_apt_repository: deb https://packages.grafana.com/oss/deb jessie main
+grafana_apt_repository: deb https://packages.grafana.com/oss/deb stable main
 grafana_apt_key: https://packages.grafana.com/gpg.key
 grafana_apt_key_id: 24098CB6
 
