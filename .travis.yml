@@ -6,6 +6,7 @@ before_install:
  - sudo apt-get install -qq python-apt python-pycurl
  - sudo cat /etc/apt/sources.list
  - sudo ls /etc/apt/sources.list.d/*
+ - sudo grep packagecloud /etc/apt/sources.list.d/*
 
 install:
   - pip install ansible>=1.6.0
