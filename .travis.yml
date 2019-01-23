@@ -3,7 +3,7 @@ language: python
 python: "2.7"
 before_install:
  - sudo apt-get update -qq
- - sudo apt-get install -qq python-apt python-pycur
+ - sudo apt-get install -qq python-apt python-pycurl
  - grep -l packagecloud /etc/apt/sources.list.d/* | xargs sudo rm
  - sudo apt-get update -qq
 
