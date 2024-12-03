@@ -1,8 +1,8 @@
 ---
 
-- include: install.deb.yml
+- include_tasks: install.deb.yml
   when: ansible_os_family == 'Debian'
   tags: [grafana, grafana-install]
 
-- include: configure.yml
+- include_tasks: configure.yml
   tags: [grafana, grafana-configure]
