@@ -113,12 +113,14 @@ google_analytics_ua_id = {{ grafana_google_analytics_ua_id }}
 
 #################################### Security ####################################
 [security]
+{% if grafana_admin_user and grafana_admin_password %}
 # default admin user, created on startup
 admin_user = {{ grafana_admin_user }}
 
 # default admin password, can be changed before first start of grafana,  or in profile settings
 admin_password = {{ grafana_admin_password }}
 
+{% endif %}
 # used for signing
 secret_key = {{ grafana_secret_key }}
 

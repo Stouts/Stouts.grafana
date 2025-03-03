@@ -1,0 +1,21 @@
+---
+
+# if admin user is set up in this run, we depend on application run with recent config
+- meta: flush_handlers
+
+- name: Add users using API
+  uri:
+    url: "{{ grafana_api_base_url }}/api/admin/users"
+    method: POST
+    body_format: json
+    # can't use api-key for this at the moment: http://docs.grafana.org/http_api/admin/
+    force_basic_auth: true
+    user: "{{ grafana_admin_user }}"
+    password: "{{ grafana_admin_password }}"
+    body:
+      name: "{{ item.username }}"
+      #email: "{{ item.username }}@domain" # not mandatory, users will have email = name in this case
+      login: "{{ item.username }}"
+      password: "{{ item.password }}"
+    status_code: 200,500 # existing users are not checked, inserting existing user causing 500 internal server error
+  with_items: "{{ grafana_users }}"
