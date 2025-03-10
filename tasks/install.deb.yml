@@ -10,6 +10,7 @@
   apt_repository: repo='{{grafana_apt_repository}}'
 
 - set_fact: grafana_release='grafana={{grafana_version}}'
+  when: grafana_version != '*'
 
 - name: grafana-install | Install Grafana Release
   apt: name="{{grafana_release}}"
@@ -22,3 +23,10 @@
   when: grafana_version == "latest"
   notify:
   - grafana restart
+  when: grafana_version != '*'
+
+- name: grafana-install | Install Grafana
+  apt: name="grafana" state=present
+  notify:
+  - grafana restart
+  when: grafana_version == '*'
